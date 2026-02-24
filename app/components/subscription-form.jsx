@@ -18,9 +18,18 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
 import { Input } from "@/components/ui/input";
 
-// import { toast } from "sonner";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   fullName: z
@@ -34,6 +43,7 @@ export default function SubscriptionForm() {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      fullName: "",
       email: "",
     },
   });
@@ -53,47 +63,63 @@ export default function SubscriptionForm() {
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-4 my-4 flex flex-col items-center"
       >
-        <FormField
-          control={form.control}
-          name="fullName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel></FormLabel>
-              <FormControl>
-                <Input
-                  className="w-[350px]"
-                  disabled={isSubmitting}
-                  placeholder="Enter name"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel></FormLabel>
-              <FormControl>
-                <Input
-                  className="w-[350px]"
-                  disabled={isSubmitting}
-                  type="email"
-                  placeholder="Enter e-mail"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button disabled={!isValid || isSubmitting} type="submit">
-          Subscribe
-        </Button>
+        <Card className="w-full sm:max-w-md p-6">
+          <CardHeader>
+            <CardTitle>Login</CardTitle>
+            <CardDescription>
+              Have an account? Login here.
+            </CardDescription>
+          </CardHeader>
+
+          <FormField
+            control={form.control}
+            name="fullName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input
+                    name="fullName"
+                    className="w-[350px]"
+                    disabled={isSubmitting}
+                    placeholder="Enter name"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input
+                    name="email"
+                    className="w-[350px]"
+                    disabled={isSubmitting}
+                    type="email"
+                    placeholder="Enter Email"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button
+            variant="destructive"
+            disabled={!isValid || isSubmitting}
+            type="submit"
+            
+          >
+            Login
+          </Button>
+        </Card>
       </form>
     </Form>
   );
-};
+}
